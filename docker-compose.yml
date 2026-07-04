@@ -1,10 +1,9 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: ./
+    image: impression
     ports:
-      - "3000:3000"
+      - "5378:5378"
     volumes:
       - .:/app
       - /app/node_modules

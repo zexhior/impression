@@ -11,6 +11,8 @@ RUN pnpm install
 
 COPY . .
 
-EXPOSE 5738
+RUN pnpm run build
 
-CMD ["pnpm", "dev", "--host", "0.0.0.0", "--port", "5738"]
+EXPOSE 5378
+
+CMD ["pnpm", "exec", "nitro", "preview", "--host", "0.0.0.0", "--port", "5378"]
