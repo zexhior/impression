@@ -58,7 +58,7 @@ jobs:
             docker rm impression || true
 
             # 4. Lancement du nouveau conteneur (ajustez les ports selon votre application)
-            docker run -d --name impression --restart always -p 5378:5738 ${{ secrets.DOCKERHUB_USERNAME }}/impression:latest
+            docker run -d --name impression --restart always -p 5378:5378 ${{ secrets.DOCKERHUB_USERNAME }}/impression:latest
 
             # 5. Nettoyage des anciennes images inutilisées pour libérer de l'espace
             docker image prune -f
