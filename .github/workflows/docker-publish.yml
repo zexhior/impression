@@ -35,3 +35,30 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/impression:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/impression:${{ github.sha }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push # Attend la fin réussie du build avant de déployer
+
+    steps:
+      - name: Executing remote SSH commands to deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            # 1. Connexion à Docker Hub sur le VPS (Optionnel si le repo est public)
+            echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+            # 2. Récupération de la nouvelle image
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/impression:latest
+
+            # 3. Arrêt et suppression de l'ancien conteneur s'il existe
+            docker stop impression_container || true
+            docker rm impression_container || true
+
+            # 4. Lancement du nouveau conteneur (ajustez les ports selon votre application)
+            docker run -d --name impression_container --restart always -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/impression:latest
+
+            # 5. Nettoyage des anciennes images inutilisées pour libérer de l'espace
+            docker image prune -f
