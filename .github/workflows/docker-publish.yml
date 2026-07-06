@@ -54,11 +54,11 @@ jobs:
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/impression:latest
 
             # 3. Arrêt et suppression de l'ancien conteneur s'il existe
-            docker stop impression_container || true
-            docker rm impression_container || true
+            docker stop impression || true
+            docker rm impression || true
 
             # 4. Lancement du nouveau conteneur (ajustez les ports selon votre application)
-            docker run -d --name impression_container --restart always -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/impression:latest
+            docker run -d --name impression --restart always -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/impression:latest
 
             # 5. Nettoyage des anciennes images inutilisées pour libérer de l'espace
             docker image prune -f
