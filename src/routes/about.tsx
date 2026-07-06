@@ -30,7 +30,7 @@ function AboutPage() {
           Notre histoire
         </span>
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mt-4 mb-8">
-          {/* Habiller ceux qui n'aiment pas se ressembler. */}
+          Habiller ceux qui n'aiment pas se ressembler.
         </h1>
         <p className="text-xl text-foreground/70 leading-relaxed mb-6">
           PRNT.STUDIO est né d'une frustration : commander un vêtement personnalisé de qualité était
@@ -41,7 +41,7 @@ function AboutPage() {
           gaspillage. Chaque pièce est imprimée en DTG haute résolution sur du coton bio certifié
           GOTS, puis expédiée sous 48h.
         </p>
-        {/*  */}
+
         <div className="grid md:grid-cols-3 gap-6 mb-20">
           {[
             {
